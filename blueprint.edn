@@ -1,0 +1,11 @@
+{:itonami.blueprint/id "cloud-itonami-isco-3131"
+ :itonami.blueprint/name "Power Production Plant Operations Coordination"
+ :itonami.blueprint/isco-08 "3131"
+ :itonami.blueprint/domain :energy/power-production
+ :itonami.blueprint/license "AGPL-3.0-or-later"
+ :itonami.blueprint/social-impact [:grid-reliability :plant-safety :operator-coordination]
+ :itonami.blueprint/governor :plant-operations-governor
+ :itonami.blueprint/robotics true
+ :itonami.blueprint/required-technologies [:robotics :identity :forms :dmn :bpmn :audit-ledger :telemetry]
+ :itonami.blueprint/optional-technologies [:optimization]
+ :itonami.blueprint/status :public-oss}
