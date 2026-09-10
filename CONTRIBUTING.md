@@ -5,7 +5,7 @@ We welcome contributions! This document provides guidance on how to contribute.
 ## Before you start
 
 - Read the [`README.md`](README.md) to understand the project's scope and design.
-- Review the hard and escalation invariants in [`src/plant_ops/governor.cljc`](src/plant_ops/governor.cljc).
+- Review the hard and escalation invariants in [`src/plant_ops/governor.kotoba`](src/plant_ops/governor.kotoba).
 - Note: **This actor does NOT control generators, turbines, or grid synchronization** — if your proposal involves those, it's out of scope.
 
 ## Development

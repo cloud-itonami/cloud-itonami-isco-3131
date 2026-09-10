@@ -117,7 +117,7 @@ The default `mock-advisor` is deterministic and suitable for testing. For produc
 
 ## Customizing the Governor
 
-The Governor policy is in `src/plant_ops/governor.cljc`. If your plant has different safety rules:
+The Governor policy is in `src/plant_ops/governor.kotoba`. If your plant has different safety rules:
 
 1. Modify the `:escalate?` logic (e.g., additional ops that require human approval).
 2. Modify the `:hard?` violations (e.g., additional prerequisites that always reject).
@@ -177,5 +177,5 @@ A: Yes. Implement the `Advisor` protocol and swap `mock-advisor` for your LLM ad
 ## Further reading
 
 - [`README.md`](../README.md) — project overview and design rationale.
-- [`src/plant_ops/governor.cljc`](../src/plant_ops/governor.cljc) — hard/escalation invariants.
-- [`src/plant_ops/actor.cljc`](../src/plant_ops/actor.cljc) — StateGraph wiring and flow.
+- [`src/plant_ops/governor.kotoba`](../src/plant_ops/governor.kotoba) — hard/escalation invariants.
+- [`src/plant_ops/actor.kotoba`](../src/plant_ops/actor.kotoba) — StateGraph wiring and flow.
