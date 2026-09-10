@@ -76,10 +76,10 @@ Full itonami Actor pattern (per ADR-2607011000 / CLAUDE.md's Actors section, alo
 
 ### Implementation modules
 
-- `src/plant_ops/store.cljc` — `Store` protocol + `MemStore`: registered plants/units, committed records, append-only audit ledger.
-- `src/plant_ops/advisor.cljc` — `Advisor` protocol; `mock-advisor` (deterministic, default) proposes an operations coordination action from a request; `llm-advisor` wraps a `langchain.model/ChatModel` — either way the advisor only ever produces a `:propose`-effect proposal, never a committed record, and LLM parse failures always yield `confidence 0.0` (forces escalation, never fabricated confidence).
-- `src/plant_ops/governor.cljc` — `PlantOpsGovernor/check`: a pure function, wired as its own `:govern` node. Hard invariants (unregistered/unverified plant, a proposal whose `:effect` isn't `:propose`, or generator/turbine/grid-sync commands) always route to `:hold`. Escalation invariants (`:flag-anomalous-reading`, or low advisor confidence) always route to `:request-approval` — an `interrupt-before` node that the graph checkpoints and only resumes on explicit human approval (`actor/approve!`).
-- `src/plant_ops/actor.cljc` — `build-graph`, `run-request!`, `approve!`: the `langgraph.graph/state-graph` wiring itself.
+- `src/plant_ops/store.kotoba` — `Store` protocol + `MemStore`: registered plants/units, committed records, append-only audit ledger.
+- `src/plant_ops/advisor.kotoba` — `Advisor` protocol; `mock-advisor` (deterministic, default) proposes an operations coordination action from a request; `llm-advisor` wraps a `langchain.model/ChatModel` — either way the advisor only ever produces a `:propose`-effect proposal, never a committed record, and LLM parse failures always yield `confidence 0.0` (forces escalation, never fabricated confidence).
+- `src/plant_ops/governor.kotoba` — `PlantOpsGovernor/check`: a pure function, wired as its own `:govern` node. Hard invariants (unregistered/unverified plant, a proposal whose `:effect` isn't `:propose`, or generator/turbine/grid-sync commands) always route to `:hold`. Escalation invariants (`:flag-anomalous-reading`, or low advisor confidence) always route to `:request-approval` — an `interrupt-before` node that the graph checkpoints and only resumes on explicit human approval (`actor/approve!`).
+- `src/plant_ops/actor.kotoba` — `build-graph`, `run-request!`, `approve!`: the `langgraph.graph/state-graph` wiring itself.
 
 ```bash
 clojure -M:test
