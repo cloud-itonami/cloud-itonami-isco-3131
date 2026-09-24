@@ -1,0 +1,34 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:physics` runs it.
+;;
+;; README "Robotics premise": a telemetry-monitoring robot performs routine
+;; production readings, maintenance scheduling and anomalous-condition
+;; flagging for power production plant operators (ISCO 3131). Its physical
+;; work is the reading round through the plant, and reading the cladding
+;; temperature of lagged main-steam piping, which depends on lagging thickness.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isco-3131"
+ :cases
+ [{:id :steam-line-cladding
+   :kind :thermal
+   :procedure "main-steam line at 540 C under mineral-wool lagging; the robot reads the cladding surface on its round (steady state after a day)"
+   :params {:conductivity-w-mk 0.06 :density-kg-m3 100.0 :specific-heat-j-kgk 840.0
+            :t0-c 30.0 :t-hot-c 540.0 :front-fixed? true :t-back-ambient-c 30.0 :h-back-w-m2k 10.0
+            :threshold-c 60.0 :duration-s 86400.0 :nodes 11}
+   :sweep {:param :thickness-m :values [0.05 0.075 0.10 0.125 0.15]}
+   :quantity :final-back-c
+   :limit {:max 60.0 :basis "estimate: cladding surface kept below ~60 C so a person brushing it on the walkway is not burned"}
+   :boundary {:lo 0.02 :hi 0.30}}
+  {:id :reading-round
+   :kind :transport
+   :procedure "robot drives the plant reading round from the control room past the gauges and back"
+   :params {:max-time-s 3600.0 :mass-kg 50.0 :payload-kg 3.0 :v-max-mps 1.0 :a-max-mps2 0.5
+            :brake-decel-mps2 0.8 :drive-force-n 150.0 :crr 0.015
+            :cog-height-m 0.70 :support-half-length-m 0.25}
+   :sweep {:param :distance-m :values [200.0 400.0 600.0 800.0 1000.0]}
+   :quantity :cycle-time-s
+   :limit {:max 720.0 :basis "estimate: a round short enough to repeat every hour with time left for stops at each gauge"}
+   :boundary {:lo 10.0 :hi 3000.0}}]}
