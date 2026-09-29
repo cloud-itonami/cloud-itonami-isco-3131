@@ -1,7 +1,7 @@
 (ns plant-ops.actor
   "PlantOpsActor — the ISCO-08 3131 power production plant operations
   coordination actor as a `langgraph.graph/state-graph` (per ADR-2607011000
-  / CLAUDE.md Actors section). One graph run = one operations coordination
+  / AGENTS.md Actors section). One graph run = one operations coordination
   request (intake → advise → govern → decide → commit/hold, with a
   human-approval interrupt for escalated proposals). No infinite internal
   loop; checkpointed per superstep so an interrupted run can resume after
